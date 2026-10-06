@@ -1,0 +1,16 @@
+node_modules/
+.pnpm-store/
+.pnpm-debug.log*
+
+.vscode/*
+!.vscode/extensions.json
+
+test-results/
+playwright-report/
+blob-report/
+playwright/.cache/
+
+.DS_Store
+Thumbs.db
+*.log
+.env

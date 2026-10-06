@@ -1,0 +1,34 @@
+{
+  "name": "emuplay",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Rapid browser emulation environment using Playwright",
+  "main": "index.js",
+  "scripts": {
+    "emu:chrome": "playwright test --project=\"Desktop Chrome\" --headed",
+    "emu:firefox": "playwright test --project=\"Desktop Firefox\" --headed",
+    "emu:safari": "playwright test --project=\"Desktop Safari\" --headed",
+    "emu:edge": "playwright test --project=\"Desktop Edge\" --headed",
+    "emu:linux": "playwright test --project=\"Desktop Linux\" --headed",
+    "emu:iphone": "playwright test --project=\"iPhone 13\" --headed",
+    "emu:iphone15": "playwright test --project=\"iPhone 15 Pro\" --headed",
+    "emu:iphone-chrome": "playwright test --project=\"iPhone Chrome\" --headed",
+    "emu:ipad": "playwright test --project=\"iPad (gen 7)\" --headed",
+    "emu:ipad-pro": "playwright test --project=\"iPad Pro\" --headed",
+    "emu:pixel": "playwright test --project=\"Pixel 7\" --headed",
+    "emu:galaxy": "playwright test --project=\"Galaxy S9+\" --headed",
+    "emu:galaxy24": "playwright test --project=\"Galaxy S24\" --headed",
+    "emu": "node scripts/emu-selector.js",
+    "emu:list": "node scripts/emu-list.js",
+    "emu:ui": "playwright test --ui"
+  },
+  "keywords": [
+    "playwright",
+    "emulation",
+    "testing",
+    "pnpm"
+  ],
+  "devDependencies": {
+    "@playwright/test": "1.63.0"
+  }
+}

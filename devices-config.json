@@ -1,0 +1,68 @@
+{
+  "Desktop Chrome": {
+    "deviceSource": "Desktop Chrome",
+    "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36",
+    "isMobile": false
+  },
+  "Desktop Firefox": {
+    "deviceSource": "Desktop Firefox",
+    "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:125.0) Gecko/20100101 Firefox/125.0",
+    "isMobile": false
+  },
+  "Desktop Safari": {
+    "deviceSource": "Desktop Safari",
+    "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.4 Safari/605.1.15",
+    "isMobile": false
+  },
+  "Desktop Edge": {
+    "deviceSource": "Desktop Edge",
+    "channel": "msedge",
+    "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36 Edg/124.0.2478.51",
+    "isMobile": false
+  },
+  "Desktop Linux": {
+    "deviceSource": "Desktop Firefox",
+    "userAgent": "Mozilla/5.0 (X11; Linux x86_64; rv:125.0) Gecko/20100101 Firefox/125.0",
+    "isMobile": false
+  },
+  "iPhone 13": {
+    "deviceSource": "iPhone 13",
+    "userAgent": "Mozilla/5.0 (iPhone; CPU iPhone OS 16_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.0 Mobile/15E148 Safari/604.1",
+    "isMobile": true
+  },
+  "iPhone 15 Pro": {
+    "deviceSource": "iPhone 15 Pro",
+    "userAgent": "Mozilla/5.0 (iPhone; CPU iPhone OS 17_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.0 Mobile/15E148 Safari/604.1",
+    "isMobile": true
+  },
+  "iPhone Chrome": {
+    "deviceSource": "iPhone 15 Pro",
+    "userAgent": "Mozilla/5.0 (iPhone; CPU iPhone OS 17_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) CriOS/124.0.6367.113 Mobile/15E148 Safari/604.1",
+    "isMobile": true
+  },
+  "iPad (gen 7)": {
+    "deviceSource": "iPad (gen 7)",
+    "userAgent": "Mozilla/5.0 (iPad; CPU OS 16_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.0 Mobile/15E148 Safari/604.1",
+    "isMobile": true
+  },
+  "iPad Pro": {
+    "deviceSource": "iPad (gen 7)",
+    "userAgent": "Mozilla/5.0 (iPad; CPU OS 17_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.0 Mobile/15E148 Safari/604.1",
+    "isMobile": true
+  },
+  "Pixel 7": {
+    "deviceSource": "Pixel 7",
+    "userAgent": "Mozilla/5.0 (Linux; Android 13; Pixel 7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Mobile Safari/537.36",
+    "isMobile": true
+  },
+  "Galaxy S9+": {
+    "deviceSource": "Galaxy S9+",
+    "userAgent": "Mozilla/5.0 (Linux; Android 10; SM-G965F) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Mobile Safari/537.36",
+    "isMobile": true
+  },
+  "Galaxy S24": {
+    "deviceSource": "Galaxy S9+",
+    "userAgent": "Mozilla/5.0 (Linux; Android 14; SM-S921B) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Mobile Safari/537.36",
+    "isMobile": true
+  }
+}
