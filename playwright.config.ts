@@ -1,4 +1,4 @@
-import { defineConfig, devices } from '@playwright/test';
+import { defineConfig, devices, PlaywrightTestConfig } from '@playwright/test';
 import deviceConfigs from './devices-config.json' with { type: 'json' };
 import process from 'node:process';
 import path from 'node:path';
@@ -13,27 +13,42 @@ interface DeviceConfig {
 
 const typedDeviceConfigs = deviceConfigs as Record<string, DeviceConfig>;
 
+let targetProjects: string[] = [];
+
+if (process.env.MULTI_PROJECTS) {
+  try {
+    targetProjects = JSON.parse(process.env.MULTI_PROJECTS);
+  } catch (e) {}
+}
+
 let multiSessionMap: Record<string, string> = {};
 if (process.env.MULTI_STORAGE_STATE_MAP) {
   try {
     multiSessionMap = JSON.parse(process.env.MULTI_STORAGE_STATE_MAP);
-  } catch (e) { }
+    if (targetProjects.length === 0) {
+      targetProjects = Object.keys(multiSessionMap);
+    }
+  } catch (e) {}
 }
 
-const projects = Object.entries(typedDeviceConfigs).map(([name, config]) => {
+if (targetProjects.length === 0) {
+  targetProjects = Object.keys(typedDeviceConfigs);
+}
+
+const projects = targetProjects.map((projectName) => {
+  const baseName = projectName.includes('__') ? projectName.split('__')[0] : projectName;
+  const config = typedDeviceConfigs[baseName];
+
+  if (!config) return null;
+
   const baseDevice = devices[config.deviceSource] || {};
-  
   let storageState: string | undefined = undefined;
 
-  if (multiSessionMap[name]) {
-    const resolvedStatePath = path.resolve(multiSessionMap[name]);
-    const authDirResolved = path.resolve(process.cwd(), 'auth');
-    if (resolvedStatePath.startsWith(authDirResolved) && existsSync(resolvedStatePath)) {
-      storageState = resolvedStatePath;
-    }
-  } 
-  else if (process.env.STORAGE_STATE) {
-    const resolvedStatePath = path.resolve(process.env.STORAGE_STATE);
+  const sessionKey = multiSessionMap[projectName] !== undefined ? projectName : baseName;
+  const targetStatePath = multiSessionMap[sessionKey] || process.env.STORAGE_STATE;
+
+  if (targetStatePath) {
+    const resolvedStatePath = path.resolve(targetStatePath);
     const authDirResolved = path.resolve(process.cwd(), 'auth');
     if (resolvedStatePath.startsWith(authDirResolved) && existsSync(resolvedStatePath)) {
       storageState = resolvedStatePath;
@@ -41,7 +56,7 @@ const projects = Object.entries(typedDeviceConfigs).map(([name, config]) => {
   }
 
   return {
-    name,
+    name: projectName,
     use: {
       ...baseDevice,
       ...(config.channel ? { channel: config.channel } : {}),
@@ -49,17 +64,14 @@ const projects = Object.entries(typedDeviceConfigs).map(([name, config]) => {
       ...(storageState ? { storageState } : {}),
     },
   };
-});
+}).filter((p): p is NonNullable<typeof p> => p !== null); 
 
 export default defineConfig({
   testDir: './tests',
-  timeout: 30 * 1000,
+  timeout: 30000,
   use: {
-    // Target application base URL
     baseURL: '<target-url>',
-    
-    // Retain trace on test retry if needed
     trace: 'on-first-retry',
   },
-  projects,
-});
+  projects: projects as PlaywrightTestConfig['projects'], 
+}) as PlaywrightTestConfig;

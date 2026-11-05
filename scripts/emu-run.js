@@ -69,6 +69,7 @@ async function main() {
   rl.close();
 
   const env = { ...process.env };
+  env.MULTI_PROJECTS = JSON.stringify([projectName]);
   if (selectedAuth) {
     env.STORAGE_STATE = selectedAuth;
     console.log(`\n\x1b[32m✅ Selected session: ${path.basename(selectedAuth)}\x1b[0m`);
