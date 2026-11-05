@@ -119,6 +119,13 @@ pnpm emu
 
 ```
 
+* **Multi-Session Multi-Device Launcher (Advanced):**
+
+```bash
+pnpm emu:ms
+
+```
+
 * **Playwright UI Mode:**
 
 ```bash

@@ -13,16 +13,28 @@ interface DeviceConfig {
 
 const typedDeviceConfigs = deviceConfigs as Record<string, DeviceConfig>;
 
+let multiSessionMap: Record<string, string> = {};
+if (process.env.MULTI_STORAGE_STATE_MAP) {
+  try {
+    multiSessionMap = JSON.parse(process.env.MULTI_STORAGE_STATE_MAP);
+  } catch (e) { }
+}
+
 const projects = Object.entries(typedDeviceConfigs).map(([name, config]) => {
   const baseDevice = devices[config.deviceSource] || {};
- 
-  // Strict validation of the STORAGE_STATE environment variable
+  
   let storageState: string | undefined = undefined;
-  if (process.env.STORAGE_STATE) {
+
+  if (multiSessionMap[name]) {
+    const resolvedStatePath = path.resolve(multiSessionMap[name]);
+    const authDirResolved = path.resolve(process.cwd(), 'auth');
+    if (resolvedStatePath.startsWith(authDirResolved) && existsSync(resolvedStatePath)) {
+      storageState = resolvedStatePath;
+    }
+  } 
+  else if (process.env.STORAGE_STATE) {
     const resolvedStatePath = path.resolve(process.env.STORAGE_STATE);
     const authDirResolved = path.resolve(process.cwd(), 'auth');
-   
-    // Verify that the file exists and is safely located inside the auth/ directory
     if (resolvedStatePath.startsWith(authDirResolved) && existsSync(resolvedStatePath)) {
       storageState = resolvedStatePath;
     }

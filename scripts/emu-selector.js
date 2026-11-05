@@ -33,22 +33,37 @@ async function main() {
   });
   console.log('\x1b[36m---------------------------------------------\x1b[0m');
 
-  const deviceAnswer = await rl.question('\x1b[32m👉 Choose one or more numbers (e.g., 1 3 8): \x1b[0m');
+  let selectedProjects = [];
 
-  const indices = deviceAnswer
-    .trim()
-    .split(/\s+/)
-    .map(n => parseInt(n, 10) - 1)
-    .filter(n => !isNaN(n));
+  while (selectedProjects.length === 0) {
+    const deviceAnswer = await rl.question('\x1b[32m👉 Choose one or more numbers (e.g., 1 3 8): \x1b[0m');
 
-  const selectedProjects = indices
-    .filter(i => i >= 0 && i < devicesList.length)
-    .map(i => devicesList[i]);
+    const rawInputs = deviceAnswer.trim().split(/\s+/);
+    const indices = rawInputs
+      .map(n => parseInt(n, 10) - 1)
+      .filter(n => !isNaN(n));
 
-  if (selectedProjects.length === 0) {
-    console.log('\n\x1b[31m❌ No valid devices selected.\x1b[0m');
-    rl.close();
-    return;
+    const validIndices = indices.filter(i => i >= 0 && i < devicesList.length);
+    const invalidInputs = rawInputs.filter((_, idx) => {
+      const parsed = parseInt(indices[idx] !== undefined ? indices[idx] + 1 : NaN, 10);
+      return isNaN(parsed) || parsed < 1 || parsed > devicesList.length;
+    });
+
+    if (invalidInputs.length > 0) {
+      console.log(`\n\x1b[33m⚠️ Invalid entry/entries detected: ${invalidInputs.join(', ')}\x1b[0m`);
+      const actionAnswer = await rl.question('\x1b[32m👉 Do you want to [i]gnore them and continue, or [r]etry selection? (i/r): \x1b[0m');
+
+      if (actionAnswer.trim().toLowerCase() === 'r') {
+        console.log('\n\x1b[33m🔄 Let\'s try again.\x1b[0m\n');
+        continue;
+      }
+    }
+
+    selectedProjects = validIndices.map(i => devicesList[i]);
+
+    if (selectedProjects.length === 0) {
+      console.log('\n\x1b[31m❌ No valid devices selected. Please try again.\x1b[0m\n');
+    }
   }
 
   let selectedAuth = '';
@@ -73,12 +88,12 @@ async function main() {
       if (authIndex >= 0 && authIndex < authFiles.length) {
         const resolvedPath = path.resolve(process.cwd(), authFiles[authIndex]);
         const authDirResolved = path.resolve(process.cwd(), 'auth');
-        
+
         if (resolvedPath.startsWith(authDirResolved) && existsSync(resolvedPath)) {
           selectedAuth = resolvedPath;
           console.log(`\n\x1b[32m✅ Selected session: ${path.basename(selectedAuth)}\x1b[0m`);
         } else {
-          console.log('\n\x1b[31m❌ Unsecure session path detected.\x1b[0m');
+          console.log('\n\x1b[31m❌ Unsecure session path detected. Launching without session.\x1b[0m');
         }
       } else {
         console.log('\n\x1b[33m⚠️ Invalid choice, launching without a session.\x1b[0m');

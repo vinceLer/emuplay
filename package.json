@@ -19,6 +19,7 @@
     "emu:galaxy": "node scripts/emu-run.js \"Galaxy S9+\"",
     "emu:galaxy24": "node scripts/emu-run.js \"Galaxy S24\"",
     "emu": "node scripts/emu-selector.js",
+    "emu:ms": "node scripts/emu-multisession.js",
     "emu:list": "node scripts/emu-list.js",
     "emu:ui": "playwright test --ui"
   },
