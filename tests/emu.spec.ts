@@ -1,6 +1,9 @@
 import { test } from '@playwright/test';
 
-test('Emulated environment with interactive pause', async ({ page }, testInfo) => {
+test('Emulated environment with interactive pause', async ({ page, context }, testInfo) => {
+  const cookies = await context.cookies();
+  console.log('\n\x1b[33m🍪 Current cookies in context:\x1b[0m', cookies);
+
   await page.goto('/');
 
   const projectName = testInfo.project.name;

@@ -7,6 +7,7 @@ A lightweight, rapid browser and device emulation setup using [Playwright](https
 ## 🚀 Quick Start
 
 1. **Install dependencies:**
+
 ```bash
 pnpm install
 
@@ -18,6 +19,19 @@ pnpm install
 pnpm exec playwright install
 
 ```
+
+---
+
+## 🔐 Authentication & Storage State
+
+You can generate and save authenticated session states (cookies, local storage, etc.) to securely test protected routes using the `--save-storage` flag:
+
+```bash
+pnpm exec playwright codegen <your-login-url> --save-storage=auth/admin.json
+
+```
+
+> **Note:** For security and proper integration with the test config, your storage state files must be saved inside the `auth/` directory. You can then load them by setting the `STORAGE_STATE` environment variable.
 
 ---
 
@@ -99,13 +113,14 @@ pnpm emu:galaxy24
 ### Interactive Selectors & UI Mode
 
 * **Interactive Terminal Selector (Multi-device selection):**
+
 ```bash
 pnpm emu
 
 ```
 
-
 * **Playwright UI Mode:**
+
 ```bash
 pnpm emu:ui
 

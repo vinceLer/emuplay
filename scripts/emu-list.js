@@ -12,7 +12,7 @@ async function main() {
     console.log('\x1b[35m=============================================\x1b[0m');
 
     for (const [name, command] of Object.entries(scripts)) {
-      if (name.startsWith('emu') || name === 'test') {
+      if (typeof name === 'string' && typeof command === 'string' && (name.startsWith('emu') || name === 'test')) {
         console.log(` \x1b[32m• pnpm ${name}\x1b[0m`);
         console.log(`   \x1b[90m└─ Command: ${command}\x1b[0m`);
       }
@@ -23,7 +23,7 @@ async function main() {
     console.log('\x1b[35m=============================================\n\x1b[0m');
 
   } catch (error) {
-    console.error('\x1b[31m❌ Error reading package.json:\x1b[0m', error.message);
+    console.error('\x1b[31m❌ Error reading package.json:\x1b[0m', error?.message || 'Unknown error');
   }
 }
 
